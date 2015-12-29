@@ -1,0 +1,14 @@
+name: Relux
+version: 0.1-dev
+description: Allows manual chunk relighting
+author: WhiteWolfdoge (Emily White)
+main: net.whitewolfdoge.relux.ReluxPlugin
+database: false
+commands:
+    relux:
+        description: Relights chunks around the player
+        usage: /relux <radius>
+
+permissions:
+    relux.use:
+        description: Gives access to Relux command
