@@ -1,9 +1,13 @@
 package net.whitewolfdoge.relux;
 
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import util.ChunkRelighter;
 
 public class ReluxPlugin extends JavaPlugin{
 	@Override
@@ -29,16 +33,25 @@ public class ReluxPlugin extends JavaPlugin{
 	}
 	
 	private boolean processRequest(CommandSender sender, String radRaw){
-		try{
-			byte rad = Byte.parseByte(radRaw);
-			
-			sender.sendMessage(sender.getName());
-			
-			//TODO next
-			return true;
+		if(sender.getName().equalsIgnoreCase("CONSOLE")){ // If the command is issued from the console
+			sender.sendMessage(ChatColor.RED + "This command cannot be issued from the console.");
 		}
-		catch(NumberFormatException nfe){ // The radius wans't a valid number
-			return false;
+		else{
+			try{
+				byte rad = Byte.parseByte(radRaw); // TODO Use this!
+				
+				Block loc = ((Player)sender).getLocation().getBlock();
+				
+				sender.sendMessage("Relighting...");
+				
+				ChunkRelighter.relightChunk(loc.getChunk());
+				// TODO Re-light all chunks within radius
+			}
+			catch(NumberFormatException nfe){ // The radius wans't a valid number
+				return false;
+			}
 		}
+		
+		return true;
 	}
 }
