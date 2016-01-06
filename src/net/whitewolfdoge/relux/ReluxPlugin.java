@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import util.ChunkRelighter;
+import util.Relighter;
 
 public class ReluxPlugin extends JavaPlugin{
 	@Override
@@ -44,7 +44,7 @@ public class ReluxPlugin extends JavaPlugin{
 				
 				sender.sendMessage("Relighting...");
 				
-				ChunkRelighter.relightChunk(loc.getChunk());
+				Relighter.relightChunk(loc.getChunk());
 				
 				sender.sendMessage("Done.");
 				

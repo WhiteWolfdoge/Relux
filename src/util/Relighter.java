@@ -6,7 +6,7 @@ import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Chunk;
 
 
-public class ChunkRelighter{
+public class Relighter{
 	/**
 	 * Use the following method to relight a chunk
 	 * @param Chunk chk		The chunk to be relighted
