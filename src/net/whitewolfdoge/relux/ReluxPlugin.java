@@ -45,6 +45,9 @@ public class ReluxPlugin extends JavaPlugin{
 				sender.sendMessage("Relighting...");
 				
 				ChunkRelighter.relightChunk(loc.getChunk());
+				
+				sender.sendMessage("Done.");
+				
 				// TODO Re-light all chunks within radius
 			}
 			catch(NumberFormatException nfe){ // The radius wans't a valid number
