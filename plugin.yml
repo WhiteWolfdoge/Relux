@@ -1,5 +1,5 @@
 name: Relux
-version: 0.1-dev
+version: 0.1-release
 description: Allows manual chunk relighting
 author: WhiteWolfdoge (Emily White)
 main: net.whitewolfdoge.relux.ReluxPlugin
