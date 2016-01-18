@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import util.Relighter;
 
 public class ReluxPlugin extends JavaPlugin{
+	public final byte defaultRadius = 3;
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 		if(cmd.getName().equalsIgnoreCase("relux")){ // If the command was "relux" or one of its aliases
@@ -19,7 +20,7 @@ public class ReluxPlugin extends JavaPlugin{
 				return true;
 			}
 			else if(args.length < 1){ // If there was no argument
-				return false;
+				return processRequest(sender, Integer.toString(defaultRadius));
 			}
 			else if(args.length > 1){ // If there was more than one argument
 				return false;
