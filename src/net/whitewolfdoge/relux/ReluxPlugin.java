@@ -1,6 +1,7 @@
 package net.whitewolfdoge.relux;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -40,11 +41,13 @@ public class ReluxPlugin extends JavaPlugin{
 			try{
 				byte rad = Byte.parseByte(radRaw); // TODO Use this!
 				
-				Block loc = ((Player)sender).getLocation().getBlock();
+				Block centerBlock = ((Player)sender).getLocation().getBlock();
+				
+				Chunk centerChunk = ((Player)sender).getWorld().getChunkAt(centerBlock);
 				
 				sender.sendMessage("Relighting...");
 				
-				Relighter.relightChunk(loc.getChunk());
+				Relighter.relightChunk(centerChunk);
 				
 				sender.sendMessage("Done.");
 				
