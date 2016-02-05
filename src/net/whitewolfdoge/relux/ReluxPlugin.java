@@ -1,4 +1,6 @@
-package net.whitewolfdoge.relux;
+package net.whiteWolfdoge.relux;
+
+import net.whiteWolfdoge.relux.util.Relighter;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -7,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import util.Relighter;
 
 public class ReluxPlugin extends JavaPlugin{
 	public final byte defaultRadius = 3;
