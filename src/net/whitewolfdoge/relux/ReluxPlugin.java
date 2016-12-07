@@ -1,64 +1,70 @@
 package net.whiteWolfdoge.relux;
 
-import net.whiteWolfdoge.relux.util.Relighter;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
-import org.bukkit.block.Block;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ReluxPlugin extends JavaPlugin{
-	public final byte defaultRadius = 3;
+	private TabExecutor tex;
+	public static final int
+		MIN_RADIUS =	1,
+		MAX_RADIUS = 	15;
+	public static final String
+		CMD_MAIN =						"relux",
+		PERMISSION_USE =				"relux.use",
+		MSG_PREFIX =					ChatColor.LIGHT_PURPLE + "[Relux] " + ChatColor.YELLOW,
+		MSG_INFO =						MSG_PREFIX + "Relux allows manual chunk relighting. Written by WhiteWolfdoge (Emily White)",
+		MSG_USAGE =						MSG_PREFIX + "Usage: " + ChatColor.ITALIC + "/relux <radius> [<xPos> <zPos>]",
+		
+		MSG_EX_PREFIX =					MSG_PREFIX + ChatColor.RED,
+		MSG_EX_PERMISSION_DENIED =		MSG_EX_PREFIX + "You were denied permission to use this plugin.",
+		MSG_EX_ARGS_INVALID_QTY =		MSG_EX_PREFIX + "Invalid quantity of arguments!",
+		MSG_EX_ARGS_INVALID_RADIUS =	MSG_EX_PREFIX + "The radius must be an integer in the range of " + MIN_RADIUS + " through " + MAX_RADIUS,
+		MSG_EX_INVALID_SOURCE =			MSG_EX_PREFIX + "You must use this command from within a world.";
+	
+	// TODO write doc
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		if(cmd.getName().equalsIgnoreCase("relux")){ // If the command was "relux" or one of its aliases
-			if(!sender.hasPermission("relux.use")){ // If the command sender does not have permission
-				sender.sendMessage(ChatColor.RED + "You don't have permission to do that!");
-				return true;
-			}
-			else if(args.length < 1){ // If there was no argument
-				return processRequest(sender, Integer.toString(defaultRadius));
-			}
-			else if(args.length > 1){ // If there was more than one argument
-				return false;
-			}
-			else{
-				return processRequest(sender, args[0]);
-			}
-		}
-		else{ // Command not recognized by this plugin
-			return false;
-		}
+	public void onLoad(){
+		tex = new InputAnalyzer();
+		// TODO
 	}
 	
-	private boolean processRequest(CommandSender sender, String radRaw){
-		if(sender.getName().equalsIgnoreCase("CONSOLE")){ // If the command is issued from the console
-			sender.sendMessage(ChatColor.RED + "This command cannot be issued from the console.");
-		}
-		else{
-			try{
-				byte rad = Byte.parseByte(radRaw); // TODO Use this!
-				
-				Block centerBlock = ((Player)sender).getLocation().getBlock();
-				
-				Chunk centerChunk = ((Player)sender).getWorld().getChunkAt(centerBlock);
-				
-				sender.sendMessage("Relighting...");
-				
-				Relighter.relightChunk(centerChunk);
-				
-				sender.sendMessage("Done.");
-				
-				// TODO Re-light all chunks within radius
-			}
-			catch(NumberFormatException nfe){ // The radius wans't a valid number
-				return false;
-			}
-		}
-		
-		return true;
+	// TODO write doc
+	@Override
+	public void onEnable(){
+		getCommand(CMD_MAIN).setExecutor(tex);
+		getCommand(CMD_MAIN).setTabCompleter(tex);
+		// TODO
 	}
+	
+	// TODO write doc
+	@Override
+	public void onDisable(){
+		//
+	}
+	
+	/**
+	 * 
+	 * @param centerChunk	The chunk in the center of the area
+	 * @param radius		The range
+	 */
+	public boolean relightChunks(Chunk centerChunk, int radius){
+		// TODO
+		return false;
+	}
+	
+	// TODO write doc
+	public boolean relightChunk(Chunk chunk, int radius){
+		// TODO
+		return false;
+	}
+	
+	// TODO write doc
+	public boolean relightBlock(Chunk block, int radius){
+		// TODO
+		return false;
+	}
+
+
 }
