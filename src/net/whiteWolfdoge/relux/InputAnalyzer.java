@@ -2,14 +2,14 @@ package net.whiteWolfdoge.relux;
 
 import java.util.List;
 
-import net.whiteWolfdoge.relux.util.Relighter;
-
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Entity;
+
+import net.whiteWolfdoge.relux.util.Relighter;
 
 /**
  * This class handles all direct input from the user.
@@ -51,10 +51,10 @@ class InputAnalyzer implements TabExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args){
 		if(args.length == 0){ // If there's no argument, tell info
 			sender.sendMessage(ReluxPlugin.MSG_INFO);
-				if(sender.hasPermission(ReluxPlugin.PERMISSION_USE)) // If the sender has permission
-					sender.sendMessage(ReluxPlugin.MSG_USAGE);
-				else // Else the sender is denied
-					sender.sendMessage(ReluxPlugin.MSG_EX_PERMISSION_DENIED);
+			if(sender.hasPermission(ReluxPlugin.PERMISSION_USE)) // If the sender has permission
+				sender.sendMessage(ReluxPlugin.MSG_USAGE);
+			else // Else the sender is denied
+				sender.sendMessage(ReluxPlugin.MSG_EX_PERMISSION_DENIED);
 			return true;
 		}
 		else if(!sender.hasPermission(ReluxPlugin.PERMISSION_USE)){ // Else if permission is denied
@@ -62,9 +62,9 @@ class InputAnalyzer implements TabExecutor{
 			return true;
 		}
 		else if(args.length != 1){ // Else if there's an invalid quantity of arguments
-			sender.sendMessage(new String[]{
+			sender.sendMessage(new String[]{ // @formatter:off
 				ReluxPlugin.MSG_EX_ARGS_INVALID_QTY,
-				ReluxPlugin.MSG_USAGE});
+				ReluxPlugin.MSG_USAGE}); // @formatter:of
 			return true;
 		}
 		else if(!radiusIsValid(args[0])){ // Else if the radius is invalid
