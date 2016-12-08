@@ -33,8 +33,9 @@ public class Relighter{
 		}
 		
 		boolean loadIssue = false;
+		boolean relightIssue = false;
 		for(int currChk = 0; currChk < affectedChks.length && !loadIssue; currChk++){ // For every chunk, while there is no loading issue
-			if(! affectedChks[currChk].load()) loadIssue = true; // If chunk loading was NOT successful, flag loading issue
+			if(!affectedChks[currChk].load()) loadIssue = true; // If chunk loading was NOT successful, flag loading issue
 			else; // Else it's ready to be relighted
 		}
 		
@@ -43,7 +44,7 @@ public class Relighter{
 				for(int yLoc = 255; yLoc >= 0; yLoc--){ // For every block on the y axis, top to bottom
 					for(byte zLoc = 0; zLoc <= 15; zLoc++){ // For every block on the z axis
 						Block currBlk = chk.getBlock(xLoc, yLoc, zLoc); // Pick the block in the chunk at the relative position
-						relightBlock(currBlk); // Relight the picked block
+						if(!relightBlock(currBlk)) relightIssue = true; // Relight the picked block, else flags relight issue
 					}
 				}
 			}
@@ -61,10 +62,10 @@ public class Relighter{
 	 * @return 		<b>true</b> if the task is successful.
 	 */
 	public static boolean relightBlock(Block blk){
-		int blockX =			blk.getX();
-		int blockY =			blk.getY();
-		int blockZ =			blk.getZ();
-		World blockWorld =		blk.getWorld();
+		int blockX = blk.getX();
+		int blockY = blk.getY();
+		int blockZ = blk.getZ();
+		World blockWorld = blk.getWorld();
 		
 		return Native.relightBlock(blockX, blockY, blockZ, blockWorld);
 	}
