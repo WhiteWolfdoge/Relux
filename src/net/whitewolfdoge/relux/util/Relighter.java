@@ -32,8 +32,10 @@ public class Relighter{
 			}
 		}
 		
-		boolean loadIssue = false;
-		boolean relightIssue = false;
+		// @formatter:off
+		boolean loadIssue =		false;
+		boolean relightIssue =	false;
+		// @formatter:on
 		for(int currChk = 0; currChk < affectedChks.length && !loadIssue; currChk++){ // For every chunk, while there is no loading issue
 			if(!affectedChks[currChk].load()) loadIssue = true; // If chunk loading was NOT successful, flag loading issue
 			else; // Else it's ready to be relighted
