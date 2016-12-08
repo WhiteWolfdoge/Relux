@@ -1,18 +1,18 @@
 package net.whiteWolfdoge.relux.util;
 
-import net.whiteWolfdoge.relux.ReluxPlugin;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+import net.whiteWolfdoge.relux.ReluxPlugin;
+
 public class Relighter{
 	/**
 	 * Use the following method to relight a radius of chunks.
 	 * @param	cenChk		The center chunk to be relighted.
-	 * @param	rad		The radius of the chunks to be relighted.
-	 * @return			Returns true if the task is successful.
+	 * @param	rad			The radius of the chunks to be relighted.
+	 * @return				<b>true</b> if the task is successful.
 	 */
 	public static boolean relightChunkRadius(Chunk cenChk, byte rad){
 		return relightChunk(cenChk); //TODO actually do all chunks
@@ -21,7 +21,7 @@ public class Relighter{
 	/**
 	 * Use the following method to relight a single chunk.
 	 * @param chk		The chunk to be relighted
-	 * @return			Returns true if the task is successful.
+	 * @return			<b>true</b> if the task is successful.
 	 */
 	public static boolean relightChunk(Chunk chk){
 		// Collect all affected Chunks
@@ -56,15 +56,16 @@ public class Relighter{
 	
 	/**
 	 * Use the following method to relight a single block.
-	 * @param blk		The block to be relighted<br />
+	 * @param blk	The block to be relighted<br />
 	 * <b>Note:</b> The chunk must be loaded for this method to work!
+	 * @return 		<b>true</b> if the task is successful.
 	 */
-	public static void relightBlock(Block blk){
+	public static boolean relightBlock(Block blk){
 		int blockX =			blk.getX();
 		int blockY =			blk.getY();
 		int blockZ =			blk.getZ();
 		World blockWorld =		blk.getWorld();
 		
-		Native.relightBlock(blockX, blockY, blockZ, blockWorld);
+		return Native.relightBlock(blockX, blockY, blockZ, blockWorld);
 	}
 }
