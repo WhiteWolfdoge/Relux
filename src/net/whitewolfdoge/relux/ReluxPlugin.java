@@ -6,6 +6,7 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ReluxPlugin extends JavaPlugin{
+	// @formatter:off
 	private TabExecutor tex;
 	public static final int
 		MIN_RADIUS =	1,
@@ -22,6 +23,7 @@ public class ReluxPlugin extends JavaPlugin{
 		MSG_EX_ARGS_INVALID_QTY =		MSG_EX_PREFIX + "Invalid quantity of arguments!",
 		MSG_EX_ARGS_INVALID_RADIUS =	MSG_EX_PREFIX + "The radius must be an integer in the range of " + MIN_RADIUS + " through " + MAX_RADIUS,
 		MSG_EX_INVALID_SOURCE =			MSG_EX_PREFIX + "You must use this command from within a world.";
+	// @formatter:on
 	
 	// TODO write doc
 	@Override
@@ -65,6 +67,4 @@ public class ReluxPlugin extends JavaPlugin{
 		// TODO
 		return false;
 	}
-
-
 }
