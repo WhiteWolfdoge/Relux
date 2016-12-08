@@ -1,6 +1,7 @@
 package net.whiteWolfdoge.relux.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -42,19 +43,27 @@ public class Relighter{
 		}
 		
 		if(!loadIssue){ // If there was no loading issue with the affected chunks
-			for(byte xLoc = 0; xLoc <= 15; xLoc++){ // For every block on the x axis
-				for(int yLoc = 255; yLoc >= 0; yLoc--){ // For every block on the y axis, top to bottom
-					for(byte zLoc = 0; zLoc <= 15; zLoc++){ // For every block on the z axis
+			for(byte xLoc = 0; xLoc <= 15 && !relightIssue; xLoc++){ // For every block on the x axis
+				for(int yLoc = 255; yLoc >= 0 && !relightIssue; yLoc--){ // For every block on the y axis, top to bottom
+					for(byte zLoc = 0; zLoc <= 15 && !relightIssue; zLoc++){ // For every block on the z axis
 						Block currBlk = chk.getBlock(xLoc, yLoc, zLoc); // Pick the block in the chunk at the relative position
 						if(!relightBlock(currBlk)) relightIssue = true; // Relight the picked block, else flags relight issue
 					}
 				}
 			}
-			// TODO Send the affected players the updated data
-			Bukkit.getLogger().info(String.format(ReluxPlugin.MSG_PREFIX + "Relit chunk (%d, %d) in world '%s'", chk.getX(), chk.getZ(), chk.getWorld().getName())); // Log the relight
 		}
 		
-		return !loadIssue;
+		if(!loadIssue && !relightIssue){
+			// TODO Send the affected players the updated data
+			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_PREFIX + "Relit chunk (%d, %d) in world '%s'", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the relight
+			
+			return true;
+		}
+		else{
+			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_EX_PREFIX + "Exception relighting chunk (%d, %d) in world '%s'", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the attempt
+			
+			return false;
+		}
 	}
 	
 	/**
