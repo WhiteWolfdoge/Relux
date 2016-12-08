@@ -37,7 +37,34 @@ public class ReluxPlugin extends JavaPlugin{
 	public void onEnable(){
 		getCommand(CMD_MAIN).setExecutor(tex);
 		getCommand(CMD_MAIN).setTabCompleter(tex);
-		// TODO
+		
+		
+		// Ensure that natives are available before continuing.		
+		ClassLoader cl = getServer().getClass().getClassLoader();
+		boolean nativesFound = false;
+		
+		try{ // NMS_v1_8_R3 (spigot-1.8.7)
+			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
+			
+			nativesFound = true;
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		try{ // NMS v1_9_R1 (spigot-1.9.2)
+			Class.forName("net.minecraft.server.v1_9d_R1.WorldServer", false, cl);
+			
+			nativesFound = true;
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		if(!nativesFound){
+			getServer().getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, we can't live like this!."));
+			getPluginLoader().disablePlugin(this);
+		}
 	}
 	
 	// TODO write doc
