@@ -45,7 +45,7 @@ public class ReluxPlugin extends JavaPlugin{
 		
 		try{ // NMS_v1_8_R3 (spigot-1.8.7)
 			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
-			
+			getServer().getLogger().info(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Found and will use NMS v1_8_R3 natives."));
 			nativesFound = true;
 		}
 		catch(ClassNotFoundException cnfex){
@@ -53,8 +53,8 @@ public class ReluxPlugin extends JavaPlugin{
 		}
 		
 		try{ // NMS v1_9_R1 (spigot-1.9.2)
-			Class.forName("net.minecraft.server.v1_9d_R1.WorldServer", false, cl);
-			
+			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
+			getServer().getLogger().info(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Found and will use NMS v1_9_R1 natives."));
 			nativesFound = true;
 		}
 		catch(ClassNotFoundException cnfex){
