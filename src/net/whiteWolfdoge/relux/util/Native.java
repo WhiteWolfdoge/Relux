@@ -1,6 +1,7 @@
 package net.whiteWolfdoge.relux.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 
 import net.whiteWolfdoge.relux.ReluxPlugin;
@@ -30,17 +31,43 @@ class Native{
 		@formatter:on
 	 */
 	protected static boolean relightBlock(int inBlockX, int inBlockY, int inBlockZ, World inBlockWorld){
-		try{ // NMS v1_9_R1
-			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, Class.class.getClassLoader()); // Probe an NMS native
+		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
+		
+		/*
+		 * NMS_v1_8_R3 (spigot-1.8.7)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl); // Probe an NMS native
+			
+			net.minecraft.server.v1_8_R3.BlockPosition blkPos = new net.minecraft.server.v1_8_R3.BlockPosition(inBlockX, inBlockY, inBlockZ);
+			
+			org.bukkit.craftbukkit.v1_8_R3.CraftWorld craftWld = (org.bukkit.craftbukkit.v1_8_R3.CraftWorld)inBlockWorld;
+			net.minecraft.server.v1_8_R3.WorldServer worldSrv = craftWld.getHandle();
+			
+			return worldSrv.x(blkPos); // Magic!
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		/*
+		 * NMS v1_9_R1 (spigot-1.9.2)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl); // Probe an NMS native
+			
 			net.minecraft.server.v1_9_R1.BlockPosition blkPos = new net.minecraft.server.v1_9_R1.BlockPosition(inBlockX, inBlockY, inBlockZ);
 			
 			org.bukkit.craftbukkit.v1_9_R1.CraftWorld craftWld = (org.bukkit.craftbukkit.v1_9_R1.CraftWorld)inBlockWorld;
 			net.minecraft.server.v1_9_R1.WorldServer worldSrv = craftWld.getHandle();
+			
 			return worldSrv.w(blkPos); // Magic!
 		}
 		catch(ClassNotFoundException cnfex){
-			Bukkit.getLogger().warning(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, try updating");
+			// Continue
 		}
+		
+		Bukkit.getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, try updating."));
 		
 		return false;
 	}
