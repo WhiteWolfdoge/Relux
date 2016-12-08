@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Relux    
+     Relights chunks
+                   
+     white                                                                
+     ====================================================================== -->
+<project name="Relux" default="export">
+    <description>
+            Relights chunks
+    </description>
+	<property name="reluxHome" location="${basedir}"/>
+
+	<property name="jarPath" location="${reluxHome}\\build\\Relux.jar"/>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: dep                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="export">
+    	<echo>"Exporting to ${jarPath}"</echo>
+    	<jar destfile="${jarPath}" basedir="${reluxHome}/bin" />
+    </target>
+	
+</project>
