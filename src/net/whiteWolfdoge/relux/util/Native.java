@@ -10,10 +10,10 @@ class Native{
 	
 	/**
 	 * <b>Note:</b> This method makes native calls and will need to be updated when the NMS version changes.
-	 * @param inBlockX
-	 * @param inBlockY
-	 * @param inBlockZ
-	 * @param inBlockWorld
+	 * @param inBlockX		The X coordomate of the block
+	 * @param inBlockY		The Y coordomate of the block
+	 * @param inBlockZ		The Y coordomate of the block
+	 * @param inBlockWorld	The world the block resides in
 	 * @return The result from the native method.
 	 **/
 	/*This method calls the following native method:
@@ -34,7 +34,9 @@ class Native{
 		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
 		
 		/*
-		 * NMS_v1_8_R3 (spigot-1.8.7)
+		 * NMS_v1_8_R3
+		 * (Minecraft 1.8.7 / CraftBukkit 1.8.7 / Spigot 1.8.7)
+		 * (Minecraft 1.8.8 / CraftBukkit 1.8.8 / Spigot 1.8.8)
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl); // Probe an NMS native
@@ -51,7 +53,8 @@ class Native{
 		}
 		
 		/*
-		 * NMS v1_9_R1 (spigot-1.9.2)
+		 * NMS v1_9_R1
+		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl); // Probe an NMS native
