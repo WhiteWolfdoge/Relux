@@ -41,7 +41,7 @@ public class ReluxPlugin extends JavaPlugin{
 		
 		// Ensure that natives are available before continuing.		
 		ClassLoader cl = getServer().getClass().getClassLoader();
-		boolean nativesFound = false;
+		String nativesFound = null;
 		
 		/*
 		 * NMS_v1_8_R3
@@ -50,8 +50,7 @@ public class ReluxPlugin extends JavaPlugin{
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
-			getServer().getLogger().info(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Found and will use NMS v1_8_R3 natives."));
-			nativesFound = true;
+			nativesFound = "Minecraft 1.8.7 / 1.8.8";
 		}
 		catch(ClassNotFoundException cnfex){
 			// Continue
@@ -63,16 +62,18 @@ public class ReluxPlugin extends JavaPlugin{
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
-			getServer().getLogger().info(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Found and will use NMS v1_9_R1 natives."));
-			nativesFound = true;
+			nativesFound = "Minecraft 1.9.2";
 		}
 		catch(ClassNotFoundException cnfex){
 			// Continue
 		}
 		
-		if(!nativesFound){
+		if(nativesFound == null){
 			getServer().getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, we can't live like this!."));
 			getPluginLoader().disablePlugin(this);
+		}
+		else{
+			getServer().getLogger().info(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Found natives: [" + nativesFound + ']'));
 		}
 	}
 	
