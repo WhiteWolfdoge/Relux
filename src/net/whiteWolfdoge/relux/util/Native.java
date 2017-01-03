@@ -9,12 +9,14 @@ import net.whiteWolfdoge.relux.ReluxPlugin;
 public class Native{
 	
 	/**
-	 * <b>Note:</b> This method makes native calls and will need to be updated when the NMS version changes.
+	 * <b>Note:</b> This method makes native calls and will need to be updated when the NMS version changes.<br />
+	 * This method attempts to relight a given Block
+	 * 
 	 * @param inBlockX		The X coordomate of the block
 	 * @param inBlockY		The Y coordomate of the block
 	 * @param inBlockZ		The Y coordomate of the block
 	 * @param inBlockWorld	The world the block resides in
-	 * @return The result from the native method.
+	 * @return true
 	 **/
 	/*This method calls the following native method:
 	 * @formatter:off
@@ -75,9 +77,14 @@ public class Native{
 		return false;
 	}
 	
+	/**
+	 * <b>Note:</b> This method makes native calls and will need to be updated when the NMS version changes.<br />
+	 * This method attempts to foind known Minecraft natives for use with manual relighting
+	 * 
+	 * @return The name fo the Minecraft version's natives found, <b>null</b> otherwise
+	 */
 	public static String checkNatives(){
 		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
-		String nativesFound = null;
 		
 		/*
 		 * NMS_v1_8_R3
@@ -86,7 +93,7 @@ public class Native{
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
-			nativesFound = "Minecraft 1.8.7 / 1.8.8";
+			return "Minecraft 1.8.7 / 1.8.8";
 		}
 		catch(ClassNotFoundException cnfex){
 			// Continue
@@ -98,12 +105,12 @@ public class Native{
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
-			nativesFound = "Minecraft 1.9.2";
+			return "Minecraft 1.9.2";
 		}
 		catch(ClassNotFoundException cnfex){
 			// Continue
 		}
 		
-		return nativesFound;
+		return null;
 	}
 }
