@@ -5,6 +5,8 @@ import org.bukkit.Chunk;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.whiteWolfdoge.relux.util.Native;
+
 public class ReluxPlugin extends JavaPlugin{
 	// @formatter:off
 	private TabExecutor tex;
@@ -25,49 +27,24 @@ public class ReluxPlugin extends JavaPlugin{
 		MSG_EX_INVALID_SOURCE =			MSG_EX_PREFIX + "You must use this command from within a world.";
 	// @formatter:on
 	
-	// TODO write doc
+	/*
+	 * The code that runs uopn initialisation
+	 */
 	@Override
 	public void onLoad(){
 		tex = new InputAnalyzer();
-		// TODO
 	}
 	
-	// TODO write doc
+	/**
+	 * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
+	 */
 	@Override
 	public void onEnable(){
 		getCommand(CMD_MAIN).setExecutor(tex);
 		getCommand(CMD_MAIN).setTabCompleter(tex);
 		
-		
-		// Ensure that natives are available before continuing.		
-		ClassLoader cl = getServer().getClass().getClassLoader();
-		String nativesFound = null;
-		
-		/*
-		 * NMS_v1_8_R3
-		 * (Minecraft 1.8.7 / CraftBukkit 1.8.7 / Spigot 1.8.7)
-		 * (Minecraft 1.8.8 / CraftBukkit 1.8.8 / Spigot 1.8.8)
-		 */
-		try{
-			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
-			nativesFound = "Minecraft 1.8.7 / 1.8.8";
-		}
-		catch(ClassNotFoundException cnfex){
-			// Continue
-		}
-		
-		/*
-		 * NMS v1_9_R1
-		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
-		 */
-		try{
-			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
-			nativesFound = "Minecraft 1.9.2";
-		}
-		catch(ClassNotFoundException cnfex){
-			// Continue
-		}
-		
+		// Ensure that natives are available before continuing.	
+		String nativesFound = Native.checkNatives();
 		if(nativesFound == null){
 			getServer().getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, we can't live like this!."));
 			getPluginLoader().disablePlugin(this);

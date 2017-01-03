@@ -6,7 +6,7 @@ import org.bukkit.World;
 
 import net.whiteWolfdoge.relux.ReluxPlugin;
 
-class Native{
+public class Native{
 	
 	/**
 	 * <b>Note:</b> This method makes native calls and will need to be updated when the NMS version changes.
@@ -73,5 +73,37 @@ class Native{
 		Bukkit.getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, try updating."));
 		
 		return false;
+	}
+	
+	public static String checkNatives(){
+		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
+		String nativesFound = null;
+		
+		/*
+		 * NMS_v1_8_R3
+		 * (Minecraft 1.8.7 / CraftBukkit 1.8.7 / Spigot 1.8.7)
+		 * (Minecraft 1.8.8 / CraftBukkit 1.8.8 / Spigot 1.8.8)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
+			nativesFound = "Minecraft 1.8.7 / 1.8.8";
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		/*
+		 * NMS v1_9_R1
+		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
+			nativesFound = "Minecraft 1.9.2";
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		return nativesFound;
 	}
 }
