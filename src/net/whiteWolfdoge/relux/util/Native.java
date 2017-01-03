@@ -36,6 +36,24 @@ public class Native{
 		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
 		
 		/*
+		 * NMS v1_9_R1
+		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl); // Probe an NMS native
+			
+			net.minecraft.server.v1_9_R1.BlockPosition blkPos = new net.minecraft.server.v1_9_R1.BlockPosition(inBlockX, inBlockY, inBlockZ);
+			
+			org.bukkit.craftbukkit.v1_9_R1.CraftWorld craftWld = (org.bukkit.craftbukkit.v1_9_R1.CraftWorld)inBlockWorld;
+			net.minecraft.server.v1_9_R1.WorldServer worldSrv = craftWld.getHandle();
+			
+			return worldSrv.w(blkPos); // Magic!
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		/*
 		 * NMS_v1_8_R3
 		 * (Minecraft 1.8.7 / CraftBukkit 1.8.7 / Spigot 1.8.7)
 		 * (Minecraft 1.8.8 / CraftBukkit 1.8.8 / Spigot 1.8.8)
@@ -54,24 +72,6 @@ public class Native{
 			// Continue
 		}
 		
-		/*
-		 * NMS v1_9_R1
-		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
-		 */
-		try{
-			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl); // Probe an NMS native
-			
-			net.minecraft.server.v1_9_R1.BlockPosition blkPos = new net.minecraft.server.v1_9_R1.BlockPosition(inBlockX, inBlockY, inBlockZ);
-			
-			org.bukkit.craftbukkit.v1_9_R1.CraftWorld craftWld = (org.bukkit.craftbukkit.v1_9_R1.CraftWorld)inBlockWorld;
-			net.minecraft.server.v1_9_R1.WorldServer worldSrv = craftWld.getHandle();
-			
-			return worldSrv.w(blkPos); // Magic!
-		}
-		catch(ClassNotFoundException cnfex){
-			// Continue
-		}
-		
 		Bukkit.getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, try updating."));
 		
 		return false;
@@ -81,10 +81,22 @@ public class Native{
 	 * <b>Note:</b> This method makes native calls and will need to be updated when the NMS version changes.<br />
 	 * This method attempts to foind known Minecraft natives for use with manual relighting
 	 * 
-	 * @return The name fo the Minecraft version's natives found, <b>null</b> otherwise
+	 * @return The name fo the latest Minecraft version's natives found, <b>null</b> otherwise
 	 */
 	public static String checkNatives(){
 		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
+		
+		/*
+		 * NMS v1_9_R1
+		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
+			return "Minecraft 1.9.2";
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
 		
 		/*
 		 * NMS_v1_8_R3
@@ -94,18 +106,6 @@ public class Native{
 		try{
 			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
 			return "Minecraft 1.8.7 / 1.8.8";
-		}
-		catch(ClassNotFoundException cnfex){
-			// Continue
-		}
-		
-		/*
-		 * NMS v1_9_R1
-		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
-		 */
-		try{
-			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
-			return "Minecraft 1.9.2";
 		}
 		catch(ClassNotFoundException cnfex){
 			// Continue
