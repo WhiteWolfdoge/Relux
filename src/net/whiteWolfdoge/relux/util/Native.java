@@ -37,6 +37,7 @@ public class Native{
 		
 		/*
 		 * NMS v1_9_R1
+		 * Minecraft 1.9 / CraftBukkit 1.9 / Spigot 1.9)
 		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
 		 */
 		try{
@@ -126,11 +127,12 @@ public class Native{
 		
 		/*
 		 * NMS v1_9_R1
+		 * Minecraft 1.9 / CraftBukkit 1.9 / Spigot 1.9)
 		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_9_R1.WorldServer", false, cl);
-			return "Minecraft 1.9.2";
+			return "Minecraft 1.9 / 1.9.2";
 		}
 		catch(ClassNotFoundException cnfex){
 			// Continue
