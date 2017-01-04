@@ -36,6 +36,24 @@ public class Native{
 		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
 		
 		/*
+		 * NMS v1_9_R2
+		 * Minecraft 1.9.4 / CraftBukkit 1.9.4 / Spigot 1.9.4)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_9_R2.WorldServer", false, cl); // Probe an NMS native
+			
+			net.minecraft.server.v1_9_R2.BlockPosition blkPos = new net.minecraft.server.v1_9_R2.BlockPosition(inBlockX, inBlockY, inBlockZ);
+			
+			org.bukkit.craftbukkit.v1_9_R2.CraftWorld craftWld = (org.bukkit.craftbukkit.v1_9_R2.CraftWorld)inBlockWorld;
+			net.minecraft.server.v1_9_R2.WorldServer worldSrv = craftWld.getHandle();
+			
+			return worldSrv.w(blkPos); // Magic!
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		/*
 		 * NMS v1_9_R1
 		 * Minecraft 1.9 / CraftBukkit 1.9 / Spigot 1.9)
 		 * Minecraft 1.9.2 / CraftBukkit 1.9.2 / Spigot 1.9.2)
@@ -124,6 +142,18 @@ public class Native{
 	 */
 	public static String checkNatives(){
 		ClassLoader cl = Bukkit.getServer().getClass().getClassLoader();
+		
+		/*
+		 * NMS v1_9_R2
+		 * Minecraft 1.9.4 / CraftBukkit 1.9.4 / Spigot 1.9.4)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_9_R2.WorldServer", false, cl);
+			return "Minecraft 1.9.4";
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
 		
 		/*
 		 * NMS v1_9_R1
