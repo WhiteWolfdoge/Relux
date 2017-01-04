@@ -23,7 +23,7 @@ public class Native{
 		public boolean ?(BlockPosition blockposition){
 			boolean flag = false;
 			
-			if(!this.worldProvider.o()){
+			if(!this.worldProvider.?()){
 				flag |= this.c(EnumSkyBlock.SKY, blockposition);
 			}
 			
@@ -54,7 +54,7 @@ public class Native{
 		}
 		
 		/*
-		 * NMS_v1_8_R3
+		 * NMS v1_8_R3
 		 * (Minecraft 1.8.7 / CraftBukkit 1.8.7 / Spigot 1.8.7)
 		 * (Minecraft 1.8.8 / CraftBukkit 1.8.8 / Spigot 1.8.8)
 		 */
@@ -71,6 +71,25 @@ public class Native{
 		catch(ClassNotFoundException cnfex){
 			// Continue
 		}
+		
+		/*
+		 * NMS v1_8_R2
+		 * (Minecraft 1.8.3 / CraftBukkit 1.8.3 / Spigot 1.8.3)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_8_R2.WorldServer", false, cl); // Probe an NMS native
+			
+			net.minecraft.server.v1_8_R2.BlockPosition blkPos = new net.minecraft.server.v1_8_R2.BlockPosition(inBlockX, inBlockY, inBlockZ);
+			
+			org.bukkit.craftbukkit.v1_8_R2.CraftWorld craftWld = (org.bukkit.craftbukkit.v1_8_R2.CraftWorld)inBlockWorld;
+			net.minecraft.server.v1_8_R2.WorldServer worldSrv = craftWld.getHandle();
+			
+			return worldSrv.x(blkPos); // Magic!
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
 		
 		Bukkit.getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, try updating."));
 		
@@ -99,13 +118,25 @@ public class Native{
 		}
 		
 		/*
-		 * NMS_v1_8_R3
+		 * NMS v1_8_R3
 		 * (Minecraft 1.8.7 / CraftBukkit 1.8.7 / Spigot 1.8.7)
 		 * (Minecraft 1.8.8 / CraftBukkit 1.8.8 / Spigot 1.8.8)
 		 */
 		try{
 			Class.forName("net.minecraft.server.v1_8_R3.WorldServer", false, cl);
 			return "Minecraft 1.8.7 / 1.8.8";
+		}
+		catch(ClassNotFoundException cnfex){
+			// Continue
+		}
+		
+		/*
+		 * NMS v1_8_R2
+		 * (Minecraft 1.8.3 / CraftBukkit 1.8.3 / Spigot 1.8.3)
+		 */
+		try{
+			Class.forName("net.minecraft.server.v1_8_R2.WorldServer", false, cl);
+			return "Minecraft 1.8.3";
 		}
 		catch(ClassNotFoundException cnfex){
 			// Continue
