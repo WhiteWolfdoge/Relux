@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ReluxPlugin extends JavaPlugin{
 	// @formatter:off
 	private TabExecutor tex;
+	
 	public static final int
 		MIN_RADIUS =	1,
 		MAX_RADIUS = 	15;
@@ -64,23 +65,26 @@ public class ReluxPlugin extends JavaPlugin{
 	}
 	
 	/**
-	 * 
+	 * This is an API method that allows software to relight a radius of chunks using Relux's code
 	 * @param centerChunk	The chunk in the center of the area
 	 * @param radius		The range
 	 */
-	public boolean relightChunks(Chunk centerChunk, int radius){
+	public boolean relightChunkRadius(Chunk centerChunk, byte radius){
+		if(this.isEnabled()){
+			return Relighter.relightChunkRadius(centerChunk, radius);
+		}
+		else return false;
+		
+	}
+	
+	// TODO write doc
+	public boolean relightChunk(Chunk chunk){
 		// TODO
 		return false;
 	}
 	
 	// TODO write doc
-	public boolean relightChunk(Chunk chunk, int radius){
-		// TODO
-		return false;
-	}
-	
-	// TODO write doc
-	public boolean relightBlock(Chunk block, int radius){
+	public boolean relightBlock(Chunk block){
 		// TODO
 		return false;
 	}
