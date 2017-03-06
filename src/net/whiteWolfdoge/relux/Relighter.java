@@ -21,7 +21,25 @@ class Relighter{
 	 * @return				<b>true</b> if the task is successful.
 	 */
 	protected static boolean relightChunkRadius(Chunk cenChk, byte rad){
-		return relightChunk(cenChk); //TODO actually do all chunks
+		int cenX = cenChk.getX(), cenZ = cenChk.getZ();
+		World wld = cenChk.getWorld();
+		int nwX = cenX - (rad - 1), nwZ = cenZ - (rad - 1);
+		
+		int edgeLength = (rad * 2) - 1;
+		Chunk[] affectedChks = new Chunk[sq(edgeLength)];
+		int insertIndex = 0;
+		for(int forZ = 0; forZ < edgeLength; forZ++) {
+			for(int forX = 0; forX < edgeLength; forX++){
+				Chunk currChk = wld.getChunkAt(nwX + forX, nwZ + forZ);
+				affectedChks[insertIndex++] = currChk;
+			}
+		}
+		
+		for(Chunk chk : affectedChks){
+			if(!relightChunk(chk)) return false;
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -85,5 +103,14 @@ class Relighter{
 		World blockWorld = blk.getWorld();
 		
 		return Native.relightBlock(blockX, blockY, blockZ, blockWorld);
+	}
+	
+	/**
+	 * The following method squares an integer.
+	 * @param int	The integer to be squared
+	 * @return		The squared integer
+	 */
+	private static int sq(int num){
+		return num * num;
 	}
 }
