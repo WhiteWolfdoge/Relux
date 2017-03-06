@@ -2,6 +2,7 @@ package net.whiteWolfdoge.relux;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.block.Block;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -68,6 +69,7 @@ public class ReluxPlugin extends JavaPlugin{
 	 * This is an API method that allows software to relight a radius of chunks using Relux's code
 	 * @param centerChunk	The chunk in the center of the area
 	 * @param radius		The range
+	 * @return			<b>true</b> if the task is successful, <b>false</b> otherwise
 	 */
 	public boolean relightChunkRadius(Chunk centerChunk, byte radius){
 		if(this.isEnabled()){
@@ -77,15 +79,28 @@ public class ReluxPlugin extends JavaPlugin{
 		
 	}
 	
-	// TODO write doc
+	/**
+	 * This is an API method that allows software to relight a chunk using Relux's code
+	 * @param chunk		The chunk that is to be relighted
+	 * @return			<b>true</b> if the task is successful, <b>false</b> otherwise
+	 */
 	public boolean relightChunk(Chunk chunk){
-		// TODO
-		return false;
+		if(this.isEnabled()){
+			return Relighter.relightChunk(chunk);
+		}
+		else return false;
 	}
 	
-	// TODO write doc
-	public boolean relightBlock(Chunk block){
-		// TODO
-		return false;
+	/**
+	 * This is an API method that allows software to relight an individual block using Relux's code<br />
+	 * <b>Note: </b>Adjacent blocks may not update when using this method, use only if you know exactly what you are doing!
+	 * @param block		The block that is to be relighted
+	 * @return			<b>true</b> if the task is successful, <b>false</b> otherwise
+	 */
+	public boolean relightBlock(Block block){
+		if(this.isEnabled()){
+			return Relighter.relightBlock(block);
+		}
+		else return false;
 	}
 }
