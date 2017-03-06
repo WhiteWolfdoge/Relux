@@ -1,13 +1,18 @@
 package net.whiteWolfdoge.relux;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 /**
  * This class handles all direct input from the user.
@@ -32,8 +37,19 @@ class InputAnalyzer implements TabExecutor{
 	 */
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args){
-		// TODO
-		return null;
+		// @formatter:off
+		sender.sendMessage(new String[]{
+			ReluxPlugin.MSG_INFO,
+			ReluxPlugin.MSG_USAGE}
+		);
+		// @formatter:on
+		
+		LinkedList<String> sug = new LinkedList<String>();
+		for(int forA = ReluxPlugin.MIN_RADIUS; forA <= ReluxPlugin.MAX_RADIUS; forA++){
+			sug.add(Integer.toString(forA));
+		}
+		
+		return sug;
 	}
 	
 	/**
@@ -62,7 +78,7 @@ class InputAnalyzer implements TabExecutor{
 		else if(args.length != 1){ // Else if there's an invalid quantity of arguments
 			sender.sendMessage(new String[]{ // @formatter:off
 				ReluxPlugin.MSG_EX_ARGS_INVALID_QTY,
-				ReluxPlugin.MSG_USAGE}); // @formatter:of
+				ReluxPlugin.MSG_USAGE}); // @formatter:on
 			return true;
 		}
 		else if(!radiusIsValid(args[0])){ // Else if the radius is invalid
