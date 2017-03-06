@@ -78,13 +78,14 @@ class Relighter{
 		
 		if(!loadIssue && !relightIssue){
 			// TODO Send the affected players the updated data
-			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_PREFIX + "Relit chunk (%d, %d) in world '%s'", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the relight
+			// String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, chX, chZ, chWld);
+			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_PREFIX + "Relit Chunk(%d, %d, %s)", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the relight
 			
 			return true;
 		}
 		else{
 			// TODO Send the affected players the updated data
-			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_EX_PREFIX + "Exception relighting chunk (%d, %d) in world '%s'", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the attempt
+			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_EX_PREFIX + "Exception relighting Chunk(%d, %d, %s)", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the attempt
 			
 			return false;
 		}
