@@ -85,21 +85,55 @@ class InputAnalyzer implements TabExecutor{
 			sender.sendMessage(ReluxPlugin.MSG_EX_ARGS_INVALID_RADIUS);
 			return true;
 		}
-		else if(!(sender instanceof Entity) && !(sender instanceof Block)){ // Else if the location cannot be determined
+		else if(!(sender instanceof Entity) && !(sender instanceof BlockCommandSender)){ // Else if the location cannot be determined
 			sender.sendMessage(ReluxPlugin.MSG_EX_INVALID_SOURCE);
 			return true;
 		}
 		else{ // Else it can be processed
 			if(sender instanceof Entity){ // If sender is an entity
-				Chunk chk = ((Entity)sender).getLocation().getChunk();
-				// TODO LOGGING Entity $ENTITY_NAME($ENTITY_X, $ENTITY_Y, $ENTITY_Z, $ENTITY_WORLD) issued relight of chunks within $(RADIUS - 1) of Chunk($CENTER_CHUNK_X, $CENTER_CHUNK_Z, $CHUNK_WORLD)				
+				Entity en =	(Entity)sender;
+				Chunk chk = en.getLocation().getChunk();
+				
+				
+				String enName = en.getClass().getSimpleName();
+				if(en instanceof Player) enName = ((Player)en).getName();
+				int enX = en.getLocation().getBlockX(), enY = en.getLocation().getBlockY(), enZ = en.getLocation().getBlockZ();
+				String enWld = en.getWorld().getName();
+				String source = String.format("%s(%d, %d, %d, %s)", enName, enX, enY, enZ, enWld);
+				
+				int rad = Byte.parseByte(args[0]);
+				Chunk cen = en.getLocation().getChunk();
+				int chX = cen.getX(), chZ = cen.getZ();
+				String chWld = cen.getWorld().getName();
+				String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, chX, chZ, chWld);
+				
+				String logMsg = ChatColor.stripColor(ReluxPlugin.MSG_PREFIX + "Entity " + source + " issued relight of " + op);
+				Bukkit.getLogger().info(logMsg);
+				
+				
 				Relighter.relightChunkRadius(chk, Byte.parseByte(args[0]));
 				return true;
 			}
-			else if(sender instanceof Block){ // If sender is a block
-				Chunk chk = ((Block)sender).getLocation().getChunk();
+			else if(sender instanceof BlockCommandSender){ // If sender is a block
+				Block blk = ((BlockCommandSender)sender).getBlock();
+				
+				
 				// TODO LOGGING Block $BLOCK_NAME($BLOCK_X, $BLOCK_Y, $BLOCK_Z, $BLOCK_WORLD) issued relight of chunks within $(RADIUS - 1) of Chunk($CENTER_CHUNK_X, $CENTER_CHUNK_Z, $CHUNK_WORLD)
-				Relighter.relightChunkRadius(chk, Byte.parseByte(args[0]));
+				String blkName = blk.getClass().getSimpleName();
+				int blkX = blk.getX(), blkY = blk.getY(), blkZ = blk.getZ();
+				String blkWld = blk.getWorld().getName();
+				String source = String.format("%s(%d, %d, %d, %s)", blkName, blkX, blkY, blkZ, blkWld);
+				
+				int rad = Byte.parseByte(args[0]);
+				Chunk cen = blk.getChunk();
+				int chX = cen.getX(), chZ = cen.getZ();
+				String chWld = cen.getWorld().getName();
+				String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, chX, chZ, chWld);
+				
+				String logMsg = ChatColor.stripColor(ReluxPlugin.MSG_PREFIX + "Block " + source + " issued relight of " + op);
+				Bukkit.getLogger().info(logMsg);
+				
+				Relighter.relightChunkRadius(cen, Byte.parseByte(args[0]));
 				return true;
 			}
 			else{ // This shouldn't ever happen.
