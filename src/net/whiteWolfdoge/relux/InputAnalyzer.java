@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
@@ -97,15 +98,12 @@ class InputAnalyzer implements TabExecutor{
 				
 				String enName = en.getClass().getSimpleName();
 				if(en instanceof Player) enName = ((Player)en).getName();
-				int enX = en.getLocation().getBlockX(), enY = en.getLocation().getBlockY(), enZ = en.getLocation().getBlockZ();
-				String enWld = en.getWorld().getName();
-				String source = String.format("%s(%d, %d, %d, %s)", enName, enX, enY, enZ, enWld);
+				Location enLoc = en.getLocation();
+				String source = String.format("%s(%d, %d, %d, %s)", enName, enLoc.getBlockX(), enLoc.getBlockY(), enLoc.getBlockZ(), en.getWorld().getName());
 				
 				int rad = Byte.parseByte(args[0]);
 				Chunk cen = en.getLocation().getChunk();
-				int chX = cen.getX(), chZ = cen.getZ();
-				String chWld = cen.getWorld().getName();
-				String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, chX, chZ, chWld);
+				String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, cen.getX(), cen.getZ(), cen.getWorld().getName());
 				
 				String logMsg = ChatColor.stripColor(ReluxPlugin.MSG_PREFIX + "Entity " + source + " issued relight of " + op);
 				Bukkit.getLogger().info(logMsg);
@@ -118,22 +116,18 @@ class InputAnalyzer implements TabExecutor{
 				Block blk = ((BlockCommandSender)sender).getBlock();
 				
 				
-				// TODO LOGGING Block $BLOCK_NAME($BLOCK_X, $BLOCK_Y, $BLOCK_Z, $BLOCK_WORLD) issued relight of chunks within $(RADIUS - 1) of Chunk($CENTER_CHUNK_X, $CENTER_CHUNK_Z, $CHUNK_WORLD)
-				String blkName = blk.getClass().getSimpleName();
-				int blkX = blk.getX(), blkY = blk.getY(), blkZ = blk.getZ();
-				String blkWld = blk.getWorld().getName();
-				String source = String.format("%s(%d, %d, %d, %s)", blkName, blkX, blkY, blkZ, blkWld);
+				String blkName = blk.getType().name();
+				String source = String.format("%s(%d, %d, %d, %s)", blkName, blk.getX(), blk.getY(), blk.getZ(), blk.getWorld().getName());
 				
-				int rad = Byte.parseByte(args[0]);
+				byte rad = Byte.parseByte(args[0]);
 				Chunk cen = blk.getChunk();
-				int chX = cen.getX(), chZ = cen.getZ();
-				String chWld = cen.getWorld().getName();
-				String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, chX, chZ, chWld);
+				String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, cen.getX(), cen.getZ(), cen.getWorld().getName());
 				
 				String logMsg = ChatColor.stripColor(ReluxPlugin.MSG_PREFIX + "Block " + source + " issued relight of " + op);
 				Bukkit.getLogger().info(logMsg);
 				
-				Relighter.relightChunkRadius(cen, Byte.parseByte(args[0]));
+				
+				Relighter.relightChunkRadius(cen, rad);
 				return true;
 			}
 			else{ // This shouldn't ever happen.
