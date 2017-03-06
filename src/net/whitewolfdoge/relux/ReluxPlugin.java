@@ -3,12 +3,11 @@ package net.whiteWolfdoge.relux;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ReluxPlugin extends JavaPlugin{
 	// @formatter:off
-	private TabExecutor tex;
+	private InputAnalyzer inAn;
 	
 	public static final int
 		MIN_RADIUS =	1,
@@ -33,7 +32,7 @@ public class ReluxPlugin extends JavaPlugin{
 	 */
 	@Override
 	public void onLoad(){
-		tex = new InputAnalyzer();
+		inAn = new InputAnalyzer();
 	}
 	
 	/**
@@ -42,8 +41,8 @@ public class ReluxPlugin extends JavaPlugin{
 	 */
 	@Override
 	public void onEnable(){
-		getCommand(CMD_MAIN).setExecutor(tex);
-		getCommand(CMD_MAIN).setTabCompleter(tex);
+		getCommand(CMD_MAIN).setExecutor(inAn);
+		getCommand(CMD_MAIN).setTabCompleter(inAn);
 		
 		// Ensure that natives are available before continuing.	
 		String nativesFound = Native.checkNatives();
