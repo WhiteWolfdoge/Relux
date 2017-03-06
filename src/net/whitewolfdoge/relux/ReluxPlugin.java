@@ -5,8 +5,6 @@ import org.bukkit.Chunk;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.whiteWolfdoge.relux.util.Native;
-
 public class ReluxPlugin extends JavaPlugin{
 	// @formatter:off
 	private TabExecutor tex;
@@ -63,7 +61,6 @@ public class ReluxPlugin extends JavaPlugin{
 	@Override
 	public void onDisable(){
 		// Do nothing
-		
 	}
 	
 	/**

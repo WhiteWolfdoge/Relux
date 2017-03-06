@@ -9,8 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Entity;
 
-import net.whiteWolfdoge.relux.util.Relighter;
-
 /**
  * This class handles all direct input from the user.
  */

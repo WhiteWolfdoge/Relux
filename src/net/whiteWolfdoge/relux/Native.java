@@ -1,10 +1,8 @@
-package net.whiteWolfdoge.relux.util;
+package net.whiteWolfdoge.relux;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-
-import net.whiteWolfdoge.relux.ReluxPlugin;
 
 public class Native{
 	

@@ -1,4 +1,4 @@
-package net.whiteWolfdoge.relux.util;
+package net.whiteWolfdoge.relux;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -6,16 +6,14 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import net.whiteWolfdoge.relux.ReluxPlugin;
-
-public class Relighter{
+class Relighter{
 	/**
 	 * Use the following method to relight a radius of chunks.
 	 * @param	cenChk		The center chunk to be relighted.
 	 * @param	rad			The radius of the chunks to be relighted.
 	 * @return				<b>true</b> if the task is successful.
 	 */
-	public static boolean relightChunkRadius(Chunk cenChk, byte rad){
+	protected static boolean relightChunkRadius(Chunk cenChk, byte rad){
 		return relightChunk(cenChk); //TODO actually do all chunks
 	}
 	
@@ -24,7 +22,7 @@ public class Relighter{
 	 * @param chk		The chunk to be relighted
 	 * @return			<b>true</b> if the task is successful.
 	 */
-	public static boolean relightChunk(Chunk chk){
+	protected static boolean relightChunk(Chunk chk){
 		// Collect all affected Chunks
 		Chunk[] affectedChks = new Chunk[9];
 		for(int xLoc = chk.getX() - 1; xLoc < chk.getX() + 2; xLoc++){ // Iterate 3 times on x, starting one chunk west
@@ -60,6 +58,7 @@ public class Relighter{
 			return true;
 		}
 		else{
+			// TODO Send the affected players the updated data
 			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_EX_PREFIX + "Exception relighting chunk (%d, %d) in world '%s'", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the attempt
 			
 			return false;
@@ -72,7 +71,7 @@ public class Relighter{
 	 * <b>Note:</b> The chunk must be loaded for this method to work!
 	 * @return 		<b>true</b> if the task is successful.
 	 */
-	public static boolean relightBlock(Block blk){
+	protected static boolean relightBlock(Block blk){
 		int blockX = blk.getX();
 		int blockY = blk.getY();
 		int blockZ = blk.getZ();
