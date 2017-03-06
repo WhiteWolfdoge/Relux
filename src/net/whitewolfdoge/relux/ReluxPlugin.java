@@ -27,8 +27,9 @@ public class ReluxPlugin extends JavaPlugin{
 		MSG_EX_INVALID_SOURCE =			MSG_EX_PREFIX + "You must use this command from within a world.";
 	// @formatter:on
 	
-	/*
-	 * The code that runs uopn initialisation
+	/**
+	 * This method is called by the PluginManager after the Plugin is constructed.
+	 * @see org.bukkit.plugin.java.JavaPlugin#onLoad()
 	 */
 	@Override
 	public void onLoad(){
@@ -36,6 +37,7 @@ public class ReluxPlugin extends JavaPlugin{
 	}
 	
 	/**
+	 * This method is called by the PluginManager when the plugin is to be prepared for usage.
 	 * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
 	 */
 	@Override
@@ -54,10 +56,14 @@ public class ReluxPlugin extends JavaPlugin{
 		}
 	}
 	
-	// TODO write doc
+	/**
+	 * This method is called by the Plugin or PluginManager when the plugin is no longer to be used.
+	 * @see org.bukkit.plugin.java.JavaPlugin#onDisable()
+	 */
 	@Override
 	public void onDisable(){
-		//
+		// Do nothing
+		
 	}
 	
 	/**
