@@ -7,6 +7,13 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 class Relighter{
+	
+	// Access restriction constructor
+	protected Relighter(){
+		// Do nothing
+	}
+	
+	
 	/**
 	 * Use the following method to relight a radius of chunks.
 	 * @param	cenChk		The center chunk to be relighted.

@@ -17,7 +17,7 @@ class InputAnalyzer implements TabExecutor{
 	/**
 	 * Constructs a new InputAnalyzer
 	 */
-	InputAnalyzer(){
+	protected InputAnalyzer(){
 		// Do nothing
 	}
 	
