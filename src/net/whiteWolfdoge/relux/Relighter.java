@@ -53,8 +53,8 @@ class Relighter{
 		boolean success = true;
 		int length = Math.abs(seChunk.getX() - nwChunk.getX());
 		int height = Math.abs(seChunk.getZ() - nwChunk.getZ());
-		for(int forX = 0; forX < length && success; forX++){ // For every x in length
-			for(int forZ = 0; forZ < height && success; forZ++){ // For every z in width
+		for(int forX = 0; forX <= length && success; forX++){ // For every x in length
+			for(int forZ = 0; forZ <= height && success; forZ++){ // For every z in width
 				Chunk currChk = rs.getWorld().getChunkAt(nwChunk.getX() + forX, nwChunk.getZ() + forZ); // Pick chunk
 				if(relightChunk(currChk)) ; // Continue if relight was sucessful
 				else{ // Else abort
