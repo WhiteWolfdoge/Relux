@@ -3,8 +3,11 @@ package net.whiteWolfdoge.relux;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+
+import com.sk89q.worldedit.bukkit.selections.RegionSelection;
 
 class Relighter{
 	
@@ -13,6 +16,56 @@ class Relighter{
 		// Do nothing
 	}
 	
+	/**
+	 * Use the following method to relight a WorldEdit selection
+	 * @param rs	The WorldEdit selection to be relit
+	 * @return		<b>true</b> if the operation was sucessful, <b>false</b> otherwise
+	 */
+	protected static boolean relightWESelection(RegionSelection rs){
+		Location min = rs.getMinimumPoint();
+		Location max = rs.getMaximumPoint();
+		
+		int xMin, xMax;
+		if(min.getBlockX() <= max.getBlockX()){
+			xMin = min.getBlockX();
+			xMax = max.getBlockX();
+		}
+		else{
+			xMin = max.getBlockX();
+			xMax = min.getBlockX();
+		}
+		
+		int zMin, zMax;
+		if(min.getBlockZ() <= max.getBlockZ()){
+			zMin = min.getBlockZ();
+			zMax = max.getBlockZ();
+		}
+		else{
+			zMin = max.getBlockZ();
+			zMax = min.getBlockZ();
+		}
+		
+		Block nwBlock = rs.getWorld().getBlockAt(xMin, 127, zMin);
+		Block seBlock = rs.getWorld().getBlockAt(xMax, 127, zMax);
+		Chunk nwChunk = nwBlock.getChunk();
+		Chunk seChunk = seBlock.getChunk();
+		
+		boolean success = true;
+		int length = Math.abs(seChunk.getX() - nwChunk.getX());
+		int height = Math.abs(seChunk.getZ() - nwChunk.getZ());
+		for(int forX = 0; forX < length && success; forX++){
+			for(int forZ = 0; forZ < height && success; forZ++){
+				Chunk currChk = rs.getWorld().getChunkAt(nwChunk.getX() + forX, nwChunk.getZ() + forZ);
+				if(relightChunk(currChk)) ;
+				else{
+					success = false;
+					break;
+				}
+			}
+		}
+		
+		return success;
+	}
 	
 	/**
 	 * Use the following method to relight a radius of chunks.
