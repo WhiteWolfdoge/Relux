@@ -24,6 +24,7 @@ public class ReluxPlugin extends JavaPlugin{
 		MSG_USAGE =						MSG_PREFIX + "Usage: " + ChatColor.ITALIC + "/relux <radius | w>",
 		MSG_RELIGHTING_STARTED = 		MSG_PREFIX + "Relighting chunks within %d %s of you...",
 		MSG_RELIGHTING_STARTED_SEL = 	MSG_PREFIX + "Relighting selection...",
+		MSG_RELIGHTING_FINISHED =		MSG_PREFIX + "Relighting finished!",
 		
 		MSG_EX_PREFIX =					MSG_PREFIX + ChatColor.RED,
 		MSG_EX_PERMISSION_DENIED =		MSG_EX_PREFIX + "You were denied permission to use this plugin.",

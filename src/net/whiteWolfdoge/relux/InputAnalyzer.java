@@ -141,6 +141,7 @@ class InputAnalyzer implements TabExecutor{
 					
 					
 					Relighter.relightWESelection(sel);
+					sender.sendMessage(ReluxPlugin.MSG_RELIGHTING_FINISHED);
 					return true;
 				}
 			}
@@ -174,6 +175,7 @@ class InputAnalyzer implements TabExecutor{
 				
 				
 				Relighter.relightChunkRadius(chk, Byte.parseByte(args[0]));
+				sender.sendMessage(ReluxPlugin.MSG_RELIGHTING_FINISHED);
 				return true;
 			}
 			else if(sender instanceof BlockCommandSender){ // If sender is a block
