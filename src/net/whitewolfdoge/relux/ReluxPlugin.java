@@ -3,11 +3,15 @@ package net.whiteWolfdoge.relux;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class ReluxPlugin extends JavaPlugin{
 	// @formatter:off
-	private InputAnalyzer inAn;
+	private InputAnalyzer inAn = null;
+	protected WorldEditPlugin wep = null;
 	
 	public static final int
 		MIN_RADIUS =	1,
@@ -15,7 +19,7 @@ public class ReluxPlugin extends JavaPlugin{
 	public static final String
 		CMD_MAIN =						"relux",
 		PERMISSION_USE =				"relux.use",
-		MSG_PREFIX =					ChatColor.LIGHT_PURPLE + "[Relux] " + ChatColor.YELLOW,
+		MSG_PREFIX =					ChatColor.LIGHT_PURPLE + "[Relux] " + ChatColor.GRAY,
 		MSG_INFO =						MSG_PREFIX + "Relux allows manual chunk relighting. Written by WhiteWolfdoge (Emily White)",
 		MSG_USAGE =						MSG_PREFIX + "Usage: " + ChatColor.ITALIC + "/relux <radius> [<xPos> <zPos>]",
 		
@@ -33,6 +37,14 @@ public class ReluxPlugin extends JavaPlugin{
 	@Override
 	public void onLoad(){
 		inAn = new InputAnalyzer();
+		
+		Plugin[] pls = getServer().getPluginManager().getPlugins();
+		for(Plugin p : pls){
+			if(p instanceof WorldEditPlugin){
+				wep = (WorldEditPlugin)p;
+				break;
+			}
+		}
 	}
 	
 	/**
@@ -47,11 +59,15 @@ public class ReluxPlugin extends JavaPlugin{
 		// Ensure that natives are available before continuing.	
 		String nativesFound = Native.checkNatives();
 		if(nativesFound == null){
-			getServer().getLogger().warning(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Natives were not found, we can't live like this!."));
+			getServer().getLogger().warning(ChatColor.stripColor(MSG_EX_PREFIX + "Natives were not found, we can't live like this!."));
 			getPluginLoader().disablePlugin(this);
 		}
 		else{
-			getServer().getLogger().info(ChatColor.stripColor(ReluxPlugin.MSG_EX_PREFIX + "Found natives: [" + nativesFound + ']'));
+			getServer().getLogger().info(ChatColor.stripColor(MSG_EX_PREFIX + "Found natives: [" + nativesFound + ']'));
+		}
+		
+		if(wep == null) {
+			getServer().getLogger().info(ChatColor.stripColor(MSG_EX_PREFIX + "Could not find WorldEdit, integration disabled!"));
 		}
 	}
 	

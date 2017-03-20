@@ -1,9 +1,10 @@
 name: Relux
-version: 0.5-release
+version: 1.0-dev
 description: Allows manual chunk relighting
 author: WhiteWolfdoge (Emily White)
 main: net.whiteWolfdoge.relux.ReluxPlugin
 database: false
+softdepend: WorldEdit
 commands:
     relux:
         description: Relights chunks around the player
