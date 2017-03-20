@@ -85,7 +85,7 @@ class InputAnalyzer implements TabExecutor{
 				ReluxPlugin.MSG_USAGE}); // @formatter:on
 			return true;
 		}
-		else if(args[0].equals('w')){ // For WorldEdit selections
+		else if(args[0].equals("w")){ // For WorldEdit selections
 			if(!(sender instanceof Player)){
 				sender.sendMessage(ReluxPlugin.MSG_EX_INVALID_SOURCE);
 				return true;
@@ -98,6 +98,7 @@ class InputAnalyzer implements TabExecutor{
 					return true;
 				}
 				else{ // Valid selection
+					sender.sendMessage(ReluxPlugin.MSG_RELIGHTING_STARTED_SEL);
 					
 					
 					String enName = pl.getName();
@@ -132,7 +133,7 @@ class InputAnalyzer implements TabExecutor{
 					Block seBlock = sel.getWorld().getBlockAt(xMax, 127, zMax);
 					Chunk nwChunk = nwBlock.getChunk();
 					Chunk seChunk = seBlock.getChunk();
-					String op = String.format("WorldEdit selection starting at Chunk(%d, %d, %s) and ending at Chunk(%d, %d, %s)", nwChunk.getX(), nwChunk.getZ(), nwChunk.getWorld(), seChunk.getX(), seChunk.getZ(), seChunk.getWorld());
+					String op = String.format("WorldEdit selection starting at Chunk(%d, %d, %s) and ending at Chunk(%d, %d, %s)", nwChunk.getX(), nwChunk.getZ(), nwChunk.getWorld().getName(), seChunk.getX(), seChunk.getZ(), seChunk.getWorld().getName());
 					
 					
 					String logMsg = ChatColor.stripColor(ReluxPlugin.MSG_PREFIX + "Player " + source + " issued relight of " + op);
@@ -154,6 +155,7 @@ class InputAnalyzer implements TabExecutor{
 		}
 		else{ // Else it can be processed
 			if(sender instanceof Entity){ // If sender is an entity
+				sender.sendMessage(String.format(ReluxPlugin.MSG_RELIGHTING_STARTED, Byte.parseByte(args[0]), Byte.parseByte(args[0]) == 1 ? "chunk" : "chunks"));
 				Entity en =	(Entity)sender;
 				Chunk chk = en.getLocation().getChunk();
 				
