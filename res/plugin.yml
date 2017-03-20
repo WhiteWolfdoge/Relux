@@ -4,12 +4,12 @@ description: Allows manual chunk relighting
 author: WhiteWolfdoge (Emily White)
 main: net.whiteWolfdoge.relux.ReluxPlugin
 database: false
-softdepend: WorldEdit
+softdepend:
+- WorldEdit
 commands:
-    relux:
-        description: Relights chunks around the player
-        usage: /relux
-
+  relux:
+    description: Relights chunks around the player
+    usage: /relux
 permissions:
-    relux.use:
-        description: Gives access to Relux command
+  relux.use:
+    description: Gives access to Relux command
