@@ -15,6 +15,9 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.bukkit.selections.Selection;
+
 /**
  * This class handles all direct input from the user.
  */
@@ -81,6 +84,65 @@ class InputAnalyzer implements TabExecutor{
 				ReluxPlugin.MSG_EX_ARGS_INVALID_QTY,
 				ReluxPlugin.MSG_USAGE}); // @formatter:on
 			return true;
+		}
+		else if(args[0].equals('w')){ // For WorldEdit selections
+			if(!(sender instanceof Player)){
+				sender.sendMessage(ReluxPlugin.MSG_EX_INVALID_SOURCE);
+				return true;
+			}
+			else{
+				Player pl = (Player)sender;
+				Selection sel = WorldEditPlugin.getPlugin(WorldEditPlugin.class).getSelection(pl);
+				if(sel == null){ // If the player has nothing selected
+					sender.sendMessage(ReluxPlugin.MSG_EX_SELECTION_REQUIRED);
+					return true;
+				}
+				else{ // Valid selection
+					
+					
+					String enName = pl.getName();
+					Location plLoc = pl.getLocation();
+					String source = String.format("%s(%d, %d, %d, %s)", enName, plLoc.getBlockX(), plLoc.getBlockY(), plLoc.getBlockZ(), pl.getWorld().getName());
+					
+
+					Location min = sel.getMinimumPoint();
+					Location max = sel.getMaximumPoint();
+					
+					int xMin, xMax;
+					if(min.getBlockX() <= max.getBlockX()){
+						xMin = min.getBlockX();
+						xMax = max.getBlockX();
+					}
+					else{
+						xMin = max.getBlockX();
+						xMax = min.getBlockX();
+					}
+					
+					int zMin, zMax;
+					if(min.getBlockZ() <= max.getBlockZ()){
+						zMin = min.getBlockZ();
+						zMax = max.getBlockZ();
+					}
+					else{
+						zMin = max.getBlockZ();
+						zMax = min.getBlockZ();
+					}
+					
+					Block nwBlock = sel.getWorld().getBlockAt(xMin, 127, zMin);
+					Block seBlock = sel.getWorld().getBlockAt(xMax, 127, zMax);
+					Chunk nwChunk = nwBlock.getChunk();
+					Chunk seChunk = seBlock.getChunk();
+					String op = String.format("WorldEdit selection starting at Chunk(%d, %d, %s) and ending at Chunk(%d, %d, %s)", nwChunk.getX(), nwChunk.getZ(), nwChunk.getWorld(), seChunk.getX(), seChunk.getZ(), seChunk.getWorld());
+					
+					
+					String logMsg = ChatColor.stripColor(ReluxPlugin.MSG_PREFIX + "Player " + source + " issued relight of " + op);
+					Bukkit.getLogger().info(logMsg);
+					
+					
+					Relighter.relightWESelection(sel);
+					return true;
+				}
+			}
 		}
 		else if(!radiusIsValid(args[0])){ // Else if the radius is invalid
 			sender.sendMessage(ReluxPlugin.MSG_EX_ARGS_INVALID_RADIUS);
