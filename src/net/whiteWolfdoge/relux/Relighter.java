@@ -101,35 +101,20 @@ class Relighter{
 	 * @return			<b>true</b> if the task is successful.
 	 */
 	protected static boolean relightChunk(Chunk chk){
-		// Collect all affected Chunks
-		Chunk[] affectedChks = new Chunk[9];
-		for(int xLoc = chk.getX() - 1; xLoc < chk.getX() + 2; xLoc++){ // Iterate 3 times on x, starting one chunk west
-			for(int zLoc = chk.getZ() - 1; zLoc < chk.getZ() + 2; zLoc++){ // Iterate 3 times on y, starting one chunk north
-				affectedChks[(xLoc - chk.getX() + 1) * 3 + (zLoc - chk.getZ() + 1)] = chk.getWorld().getChunkAt(xLoc, zLoc);
-			}
-		}
+		boolean relightIssue = false;
 		
-		// @formatter:off
-		boolean loadIssue =		false;
-		boolean relightIssue =	false;
-		// @formatter:on
-		for(int currChk = 0; currChk < affectedChks.length && !loadIssue; currChk++){ // For every chunk, while there is no loading issue
-			if(!affectedChks[currChk].load()) loadIssue = true; // If chunk loading was NOT successful, flag loading issue
-			else; // Else it's ready to be relighted
-		}
+		if(!chk.load()) return false; // The chunk could not be loaded!
 		
-		if(!loadIssue){ // If there was no loading issue with the affected chunks
-			for(byte xLoc = 0; xLoc <= 15 && !relightIssue; xLoc++){ // For every block on the x axis
-				for(int yLoc = 255; yLoc >= 0 && !relightIssue; yLoc--){ // For every block on the y axis, top to bottom
-					for(byte zLoc = 0; zLoc <= 15 && !relightIssue; zLoc++){ // For every block on the z axis
-						Block currBlk = chk.getBlock(xLoc, yLoc, zLoc); // Pick the block in the chunk at the relative position
-						if(!relightBlock(currBlk)) relightIssue = true; // Relight the picked block, else flags relight issue
-					}
+		for(byte xLoc = 0; xLoc <= 15 && !relightIssue; xLoc++){ // For every block on the x axis
+			for(int yLoc = 255; yLoc >= 0 && !relightIssue; yLoc--){ // For every block on the y axis, top to bottom
+				for(byte zLoc = 0; zLoc <= 15 && !relightIssue; zLoc++){ // For every block on the z axis
+					Block currBlk = chk.getBlock(xLoc, yLoc, zLoc); // Pick the block in the chunk at the relative position
+					if(!relightBlock(currBlk)) relightIssue = true; // Relight the picked block, else flags relight issue
 				}
 			}
 		}
 		
-		if(!loadIssue && !relightIssue){
+		if(!relightIssue){
 			// TODO Send the affected players the updated data
 			// String op = String.format("chunks within %d of Chunk(%d, %d, %s)", rad, chX, chZ, chWld);
 			Bukkit.getLogger().info(ChatColor.stripColor(String.format(ReluxPlugin.MSG_PREFIX + "Relit Chunk(%d, %d, %s)", chk.getX(), chk.getZ(), chk.getWorld().getName()))); // Log the relight
