@@ -8,10 +8,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
+import net.whiteWolfdoge.relux.NativesProviders.NativesProvider;
+
 public class ReluxPlugin extends JavaPlugin{
 	// @formatter:off
 	private InputAnalyzer inAn = null;
 	protected WorldEditPlugin wep = null;
+	protected NativesProvider npv = null;
+	protected Relighter rl = null;
 	
 	public static final int
 		MIN_RADIUS =	1,
@@ -40,7 +44,7 @@ public class ReluxPlugin extends JavaPlugin{
 	 */
 	@Override
 	public void onLoad(){
-		inAn = new InputAnalyzer();
+		inAn = new InputAnalyzer(this);
 		
 		Plugin[] pls = getServer().getPluginManager().getPlugins();
 		for(Plugin p : pls){
@@ -60,15 +64,24 @@ public class ReluxPlugin extends JavaPlugin{
 		getCommand(CMD_MAIN).setExecutor(inAn);
 		getCommand(CMD_MAIN).setTabCompleter(inAn);
 		
-		// Ensure that natives are available before continuing.	
-		String nativesFound = Native.checkNatives();
-		if(nativesFound == null){
+		
+		// Ensure that natives are available before continuing.
+		for(NativesProvider p : NativesProvider.providers){
+			if(p.isAvailable()){
+				npv = p;
+				break;
+			}
+		}
+		
+		if(npv == null){
 			getServer().getLogger().warning(ChatColor.stripColor(MSG_EX_PREFIX + "Natives were not found, we can't live like this!."));
 			getPluginLoader().disablePlugin(this);
 		}
 		else{
-			getServer().getLogger().info(ChatColor.stripColor(MSG_EX_PREFIX + "Found natives: [" + nativesFound + ']'));
+			getServer().getLogger().info(ChatColor.stripColor(MSG_EX_PREFIX + "Found natives: [" + npv.getName() + ']'));
+			rl = new Relighter(this);
 		}
+		
 		
 		if(wep == null) {
 			getServer().getLogger().info(ChatColor.stripColor(MSG_EX_PREFIX + "Could not find WorldEdit, integration disabled!"));
@@ -92,7 +105,7 @@ public class ReluxPlugin extends JavaPlugin{
 	 */
 	public boolean relightChunkRadius(Chunk centerChunk, byte radius){
 		if(this.isEnabled()){
-			return Relighter.relightChunkRadius(centerChunk, radius);
+			return rl.relightChunkRadius(centerChunk, radius);
 		}
 		else return false;
 		
@@ -105,7 +118,7 @@ public class ReluxPlugin extends JavaPlugin{
 	 */
 	public boolean relightChunk(Chunk chunk){
 		if(this.isEnabled()){
-			return Relighter.relightChunk(chunk);
+			return rl.relightChunk(chunk);
 		}
 		else return false;
 	}
@@ -118,7 +131,7 @@ public class ReluxPlugin extends JavaPlugin{
 	 */
 	public boolean relightBlock(Block block){
 		if(this.isEnabled()){
-			return Relighter.relightBlock(block);
+			return rl.relightBlock(block);
 		}
 		else return false;
 	}

@@ -10,10 +10,11 @@ import org.bukkit.block.Block;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 
 class Relighter{
+	private final ReluxPlugin rp;
 	
 	// Access restriction constructor
-	protected Relighter(){
-		// Do nothing
+	protected Relighter(ReluxPlugin newRP){
+		rp = newRP;
 	}
 	
 	/**
@@ -21,7 +22,7 @@ class Relighter{
 	 * @param rs	The WorldEdit selection to be relit
 	 * @return		<b>true</b> if the operation was sucessful, <b>false</b> otherwise
 	 */
-	protected static boolean relightWESelection(Selection rs){
+	protected boolean relightWESelection(Selection rs){
 		Location min = rs.getMinimumPoint();
 		Location max = rs.getMaximumPoint();
 		
@@ -73,7 +74,7 @@ class Relighter{
 	 * @param	rad			The radius of the chunks to be relighted.
 	 * @return				<b>true</b> if the task is successful.
 	 */
-	protected static boolean relightChunkRadius(Chunk cenChk, byte rad){
+	protected boolean relightChunkRadius(Chunk cenChk, byte rad){
 		int cenX = cenChk.getX(), cenZ = cenChk.getZ();
 		World wld = cenChk.getWorld();
 		int nwX = cenX - (rad - 1), nwZ = cenZ - (rad - 1);
@@ -100,7 +101,7 @@ class Relighter{
 	 * @param chk		The chunk to be relighted
 	 * @return			<b>true</b> if the task is successful.
 	 */
-	protected static boolean relightChunk(Chunk chk){
+	protected boolean relightChunk(Chunk chk){
 		boolean relightIssue = false;
 		
 		if(!chk.load()) return false; // The chunk could not be loaded!
@@ -135,13 +136,9 @@ class Relighter{
 	 * <b>Note:</b> The chunk must be loaded for this method to work!
 	 * @return 		<b>true</b> if the task is successful.
 	 */
-	protected static boolean relightBlock(Block blk){
-		int blockX = blk.getX();
-		int blockY = blk.getY();
-		int blockZ = blk.getZ();
-		World blockWorld = blk.getWorld();
+	protected boolean relightBlock(Block blk){
 		
-		return Native.relightBlock(blockX, blockY, blockZ, blockWorld);
+		return rp.npv.relightBlock(blk);
 	}
 	
 	/**

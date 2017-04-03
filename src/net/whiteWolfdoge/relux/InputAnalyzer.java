@@ -22,12 +22,13 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
  * This class handles all direct input from the user.
  */
 class InputAnalyzer implements TabExecutor{
+	private final ReluxPlugin rp;
 	
 	/**
 	 * Constructs a new InputAnalyzer
 	 */
-	protected InputAnalyzer(){
-		// Do nothing
+	protected InputAnalyzer(ReluxPlugin newRP){
+		rp = newRP;
 	}
 	
 	/**
@@ -140,7 +141,7 @@ class InputAnalyzer implements TabExecutor{
 					Bukkit.getLogger().info(logMsg);
 					
 					
-					Relighter.relightWESelection(sel);
+					rp.rl.relightWESelection(sel);
 					sender.sendMessage(ReluxPlugin.MSG_RELIGHTING_FINISHED);
 					return true;
 				}
@@ -174,7 +175,7 @@ class InputAnalyzer implements TabExecutor{
 				Bukkit.getLogger().info(logMsg);
 				
 				
-				Relighter.relightChunkRadius(chk, Byte.parseByte(args[0]));
+				rp.rl.relightChunkRadius(chk, Byte.parseByte(args[0]));
 				sender.sendMessage(ReluxPlugin.MSG_RELIGHTING_FINISHED);
 				return true;
 			}
@@ -193,7 +194,7 @@ class InputAnalyzer implements TabExecutor{
 				Bukkit.getLogger().info(logMsg);
 				
 				
-				Relighter.relightChunkRadius(cen, rad);
+				rp.rl.relightChunkRadius(cen, rad);
 				return true;
 			}
 			else{ // This shouldn't ever happen.
