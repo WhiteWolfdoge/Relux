@@ -1,4 +1,4 @@
-package net.whiteWolfdoge.relux.NativesProviders;
+package net.whiteWolfdoge.relux.natives;
 
 import org.bukkit.block.Block;
 

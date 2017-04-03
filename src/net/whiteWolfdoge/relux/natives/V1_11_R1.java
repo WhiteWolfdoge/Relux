@@ -1,28 +1,28 @@
-package net.whiteWolfdoge.relux.NativesProviders;
+package net.whiteWolfdoge.relux.natives;
 
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PlayerChunkMap;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_11_R1.BlockPosition;
+import net.minecraft.server.v1_11_R1.PlayerChunkMap;
+import net.minecraft.server.v1_11_R1.WorldServer;
 
 /*
- * NMS v1_8_R3
- * (Minecraft 1.8.7 / Minecraft 1.8.8)
+ * NMS v1_11_R1
+ * (Minecraft 1.11)
  */
-class V1_8_R3 implements NativesProvider{
+class V1_11_R1 implements NativesProvider{
 	private final String alias;
 	private final String name;
 	private final boolean avail;
 	
-	public V1_8_R3(){
-		alias = "V1_8_R3";
-		name = "Minecraft 1.8.7 / Minecraft 1.8.8";
+	public V1_11_R1(){
+		alias = "V1_11_R1";
+		name = "Minecraft 1.11";
 		
 		boolean pass = false;
 		try{
-			Class.forName("net.minecraft.server.v1_8_R3.WorldServer");
+			Class.forName("net.minecraft.server.v1_11_R1.WorldServer");
 			pass = true;
 		}
 		catch(ClassNotFoundException cnfex){
@@ -57,6 +57,6 @@ class V1_8_R3 implements NativesProvider{
 		PlayerChunkMap pcm = worldSrv.getPlayerChunkMap();
 		pcm.flagDirty(blkPos);
 		
-		return worldSrv.x(blkPos); // Magic!
+		return worldSrv.w(blkPos); // Magic!
 	}
 }

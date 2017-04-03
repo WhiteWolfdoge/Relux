@@ -1,4 +1,4 @@
-package net.whiteWolfdoge.relux.NativesProviders;
+package net.whiteWolfdoge.relux.natives;
 
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;

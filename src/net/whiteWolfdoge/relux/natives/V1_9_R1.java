@@ -1,28 +1,28 @@
-package net.whiteWolfdoge.relux.NativesProviders;
+package net.whiteWolfdoge.relux.natives;
 
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
 
-import net.minecraft.server.v1_11_R1.BlockPosition;
-import net.minecraft.server.v1_11_R1.PlayerChunkMap;
-import net.minecraft.server.v1_11_R1.WorldServer;
+import net.minecraft.server.v1_9_R1.BlockPosition;
+import net.minecraft.server.v1_9_R1.PlayerChunkMap;
+import net.minecraft.server.v1_9_R1.WorldServer;
 
 /*
- * NMS v1_11_R1
- * (Minecraft 1.11)
+ * NMS v1_9_R1
+ * (Minecraft 1.9 / Minecraft 1.9.2)
  */
-class V1_11_R1 implements NativesProvider{
+class V1_9_R1 implements NativesProvider{
 	private final String alias;
 	private final String name;
 	private final boolean avail;
 	
-	public V1_11_R1(){
-		alias = "V1_11_R1";
-		name = "Minecraft 1.11";
+	public V1_9_R1(){
+		alias = "V1_9_R1";
+		name = "Minecraft 1.9 / Minecraft 1.9.2";
 		
 		boolean pass = false;
 		try{
-			Class.forName("net.minecraft.server.v1_11_R1.WorldServer");
+			Class.forName("net.minecraft.server.v1_9_R1.WorldServer");
 			pass = true;
 		}
 		catch(ClassNotFoundException cnfex){

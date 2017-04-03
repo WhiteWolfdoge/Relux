@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
-import net.whiteWolfdoge.relux.NativesProviders.NativesProvider;
+import net.whiteWolfdoge.relux.natives.NativesProvider;
 
 public class ReluxPlugin extends JavaPlugin{
 	// @formatter:off

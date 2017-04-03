@@ -3,4 +3,4 @@
  * 
  * @author Emily J White
  */
-package net.whiteWolfdoge.relux.NativesProviders;
+package net.whiteWolfdoge.relux.natives;
