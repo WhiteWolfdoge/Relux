@@ -24,7 +24,7 @@ public class ReluxPlugin extends JavaPlugin{
 		CMD_MAIN =						"relux",
 		PERMISSION_USE =				"relux.use",
 		MSG_PREFIX =					ChatColor.LIGHT_PURPLE + "[Relux] " + ChatColor.GRAY,
-		MSG_INFO =						MSG_PREFIX + "Relux allows manual chunk relighting. Written by WhiteWolfdoge (Emily White)",
+		MSG_INFO =						MSG_PREFIX + "Relux is a plugin and API that allows relighting of the world. Author: " + ChatColor.ITALIC + "WhiteWolfdoge (Emily J .White)",
 		MSG_USAGE =						MSG_PREFIX + "Usage: " + ChatColor.ITALIC + "/relux <radius | w>",
 		MSG_RELIGHTING_STARTED = 		MSG_PREFIX + "Relighting chunks within %d %s of you...",
 		MSG_RELIGHTING_STARTED_SEL = 	MSG_PREFIX + "Relighting selection...",
@@ -83,8 +83,8 @@ public class ReluxPlugin extends JavaPlugin{
 		}
 		
 		
-		if(wep == null) {
-			getServer().getLogger().info(ChatColor.stripColor(MSG_EX_PREFIX + "Could not find WorldEdit, integration disabled!"));
+		if(wep != null){
+			getServer().getLogger().info(ChatColor.stripColor(MSG_PREFIX + "WorldEdit found, you can use the wand to select blocks!"));
 		}
 	}
 	

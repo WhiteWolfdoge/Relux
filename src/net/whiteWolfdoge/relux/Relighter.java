@@ -36,6 +36,16 @@ class Relighter{
 			xMax = min.getBlockX();
 		}
 		
+		int yMin, yMax;
+		if(min.getBlockY() <= max.getBlockY()){
+			yMin = min.getBlockY();
+			yMax = max.getBlockY();
+		}
+		else{
+			yMin = max.getBlockY();
+			yMax = min.getBlockY();
+		}
+		
 		int zMin, zMax;
 		if(min.getBlockZ() <= max.getBlockZ()){
 			zMin = min.getBlockZ();
@@ -46,21 +56,15 @@ class Relighter{
 			zMax = min.getBlockZ();
 		}
 		
-		Block nwBlock = rs.getWorld().getBlockAt(xMin, 127, zMin);
-		Block seBlock = rs.getWorld().getBlockAt(xMax, 127, zMax);
-		Chunk nwChunk = nwBlock.getChunk();
-		Chunk seChunk = seBlock.getChunk();
-		
 		boolean success = true;
-		int length = Math.abs(seChunk.getX() - nwChunk.getX());
-		int height = Math.abs(seChunk.getZ() - nwChunk.getZ());
-		for(int forX = 0; forX <= length && success; forX++){ // For every x in length
-			for(int forZ = 0; forZ <= height && success; forZ++){ // For every z in width
-				Chunk currChk = rs.getWorld().getChunkAt(nwChunk.getX() + forX, nwChunk.getZ() + forZ); // Pick chunk
-				if(relightChunk(currChk)) ; // Continue if relight was sucessful
-				else{ // Else abort
-					success = false;
-					break;
+		for(int forX = xMin; forX <= xMax; forX++){ // For every selected x axis, west to east
+			for(int forY = yMax; forX >= yMin; forY--){ // For every selected y axis, top to bottom
+				for(int forZ = zMin; forZ <= zMax; forZ++){ // For every selected z axis, north to south
+					if(relightBlock(rs.getWorld().getBlockAt(forX, forY, forZ))) ; // If the relight was successful
+					else{ // Else failure, abort
+						success = false;
+						break;
+					}
 				}
 			}
 		}
