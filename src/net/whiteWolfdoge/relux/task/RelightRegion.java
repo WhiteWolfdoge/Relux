@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class RelightTask{
+public class RelightRegion{
 	private int blkTotal;
 	private World wld;
 	private Block[] blkList;
@@ -14,11 +14,11 @@ public class RelightTask{
 	 * Constructor to restrict access
 	 */
 	@SuppressWarnings("unused")
-	private RelightTask(){
+	private RelightRegion(){
 		// Do nothing
 	}
 	
-	public RelightTask(Block[] newBlkList){
+	public RelightRegion(Block[] newBlkList){
 		if(newBlkList == null || newBlkList.length == 0){ // Verify valid array
 			throw new IllegalArgumentException("A RelightTask must contain at least one block.");
 		}
